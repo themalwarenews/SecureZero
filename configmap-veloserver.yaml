@@ -1,0 +1,116 @@
+apiVersion: v1
+data:
+  server.config.yaml: |
+    version:
+      name: velociraptor
+      version: 0.6.7-4
+      commit: c6f11a7
+      build_time: "2022-12-06T13:30:08Z"
+      ci_build_url: https://github.com/Velocidex/velociraptor/actions/runs/3629952817
+      compiler: go1.19.3
+    Client:
+      server_urls:
+        - https://Velociraptor:8000/
+      ca_certificate: |
+        -----BEGIN CERTIFICATE-----
+             YOUR CERTIFICATE
+        -----END CERTIFICATE-----
+      nonce: 4riteJKIvRw=
+      writeback_darwin: /etc/velociraptor.writeback.yaml
+      writeback_linux: /etc/velociraptor.writeback.yaml
+      writeback_windows: $ProgramFiles\Velociraptor\velociraptor.writeback.yaml
+      tempdir_windows: $ProgramFiles\Velociraptor\Tools
+      max_poll: 60
+      nanny_max_connection_delay: 600
+      windows_installer:
+        service_name: Velociraptor
+        install_path: $ProgramFiles\Velociraptor\Velociraptor.exe
+        service_description: Velociraptor service
+      darwin_installer:
+        service_name: com.velocidex.velociraptor
+        install_path: /usr/local/sbin/velociraptor
+      version:
+        name: velociraptor
+        version: 0.6.7-4
+        commit: c6f11a7
+        build_time: "2022-12-06T13:30:08Z"
+        ci_build_url: https://github.com/Velocidex/velociraptor/actions/runs/3629952817
+        compiler: go1.19.3
+      use_self_signed_ssl: true
+      pinned_server_name: VelociraptorServer
+      max_upload_size: 5242880
+      local_buffer:
+        memory_size: 52428800
+        disk_size: 1073741824
+        filename_linux: /var/tmp/Velociraptor_Buffer.bin
+        filename_windows: $TEMP/Velociraptor_Buffer.bin
+        filename_darwin: /var/tmp/Velociraptor_Buffer.bin
+    API:
+      bind_address: 0.0.0.0
+      bind_port: 8001
+      bind_scheme: tcp
+      pinned_gw_name: GRPC_GW
+    GUI:
+      bind_address: 0.0.0.0
+      bind_port: 8889
+      gw_certificate: |
+        -----BEGIN CERTIFICATE-----
+             YOUR CERTIFICATE
+        -----END CERTIFICATE-----
+      gw_private_key: |
+        -----BEGIN CERTIFICATE-----
+             YOUR CERTIFICATE
+        -----END CERTIFICATE-----
+      links:
+        - text: Documentation
+          url: https://docs.velociraptor.app/
+          icon_url: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MyIgaGVpZ2h0PSI2MyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTMgNjMiPjxwYXRoIGQ9Ik0yNyAzYy0zIDItMTMgOC0yMyAxMGw2IDMyYTEwMyAxMDMgMCAwIDAgMTcgMTZsNi01IDExLTExIDYtMzJDMzkgMTEgMzAgNSAyNyAzeiIgZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIi8+PHBhdGggZD0iTTI2IDBDMjMgMiAxMiA4IDAgMTBjMSA3IDUgMzIgNyAzNWExMTMgMTEzIDAgMCAwIDE5IDE4bDctNiAxMi0xMmMyLTMgNi0yOCA4LTM1QzQwIDggMjkgMiAyNiAwWm0wIDU1LTYtNC04LTktNS0yNnYtMWwyLTFjOC0xIDE2LTYgMTYtNmwxLTEgMSAxczggNSAxNyA2bDEgMXYxcy0zIDIzLTUgMjZsLTggOWMtMiAyLTQgNC02IDR6IiBmaWxsPSIjYWIwMDAwIiBmaWxsLW9wYWNpdHk9IjEiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjxwYXRoIGQ9Ik0zOSAxOWExMzQ3IDEzNDcgMCAwIDEtMTMgMjZoLTJMMTQgMTloM2wyIDEgMSAxdjFhMjUwIDI1MCAwIDAgMSA2IDE3IDUyODkgNTI4OSAwIDAgMCA5LTIwaDR6IiBmaWxsPSIjMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLWRhc2hhcnJheT0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIHN0cm9rZS13aWR0aD0iMSIvPjwvc3ZnPg==
+          type: sidebar
+          new_tab: true
+      initial_users:
+      - name: {username}
+        password_hash: 
+        password_salt: 
+        type: Basic
+    CA:
+      private_key: |
+       -----BEGIN CERTIFICATE-----
+             YOUR CERTIFICATE
+        -----END CERTIFICATE-----
+      private_key: |
+      -----BEGIN CERTIFICATE-----
+             YOUR CERTIFICATE
+        -----END CERTIFICATE-----
+      default_client_monitoring_artifacts:
+        - Generic.Client.Stats
+      GRPC_pool_max_size: 100
+      GRPC_pool_max_wait: 60
+      resources:
+        connections_per_second: 100
+        notifications_per_second: 30
+        max_upload_size: 10485760
+        expected_clients: 30000
+    Datastore:
+      implementation: FileBaseDataStore
+      location: ./
+      filestore_directory: ./
+    Logging:
+      output_directory: .
+      separate_logs_per_component: true
+      debug:
+        disabled: true
+      info:
+        rotation_time: 604800
+        max_age: 31536000
+      error:
+        rotation_time: 604800
+        max_age: 31536000
+    Monitoring:
+      bind_address: 0.0.0.0
+      bind_port: 8003
+    api_config: {}
+    obfuscation_nonce: th2HCiTCFpM=
+kind: ConfigMap
+metadata:
+  name: serverconfig
+  namespace: velociraptor-EDR
