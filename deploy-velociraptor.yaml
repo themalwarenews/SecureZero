@@ -1,0 +1,125 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+ name: efs3
+ labels:
+   type: local
+spec:
+ storageClassName: manual
+ capacity:
+   storage: 10Gi
+ accessModes:
+   - ReadWriteOnce
+ hostPath:
+   path: "/home/ubuntu/velo-datastore"
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+ name: efs4
+ labels:
+   type: local
+spec:
+ storageClassName: manual
+ capacity:
+   storage: 10Gi
+ accessModes:
+   - ReadWriteOnce
+ hostPath:
+   path: "/home/ubuntu/velo-logs"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: efs1
+spec:
+ storageClassName: manual
+ accessModes:
+   - ReadWriteOnce
+ resources:
+   requests:
+     storage: 3Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: efs2
+spec:
+ storageClassName: manual
+ accessModes:
+   - ReadWriteOnce
+ resources:
+   requests:
+     storage: 3Gi
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+ name: velociraptor
+ namespace: velociraptor-EDR
+ annotations:
+   service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "8889"
+   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
+spec:
+ type: LoadBalancer
+ selector:
+   app: velociraptor
+ ports:
+   - name: gui
+     protocol: TCP
+     port: 8889
+     targetPort: 8889
+   - name: frontend
+     protocol: TCP
+     port: 8000
+     targetPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: velociraptor
+ namespace: velociraptor-EDR
+ labels:
+   app: velociraptor
+spec:
+ replicas: 2
+ selector:
+   matchLabels:
+     app: velociraptor
+ template:
+   metadata:
+     labels:
+       app: velociraptor
+   spec:
+     containers:
+       - name: velociraptor
+         image: {Your docker image path}
+         imagePullPolicy: Always
+         ports:
+           - containerPort: 8889
+           - containerPort: 8000
+         volumeMounts:
+           - name: efs-datastore
+             mountPath: "/home/ubuntu/velo-datastore"
+           - name: efs-logs
+             mountPath: "/home/ubuntu/velo-logs"
+           - name: server-config
+             mountPath: "/home/ubuntu/server.config.yaml"
+             subPath: server.config.yaml
+     volumes:
+       - name: efs-datastore
+         persistentVolumeClaim:
+           claimName: efs1
+       - name: efs-logs
+         persistentVolumeClaim:
+           claimName: efs2
+       - name: server-config
+         configMap:
+           name: serverconfig
+           items:
+             - key: server.config.yaml
+               path: server.config.yaml
