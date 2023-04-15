@@ -65,12 +65,9 @@ GUI:
       type: sidebar
       new_tab: true
   initial_users:
-  - name: 
-    password_hash: {username}
-    password_salt: {md5pass}
-  - name: 
-    password_hash: {username}
-    password_salt: {md5pass}
+  - name: {username}
+    password_hash: 
+    password_salt: 
   authenticator:
     type: Basic
 CA:
