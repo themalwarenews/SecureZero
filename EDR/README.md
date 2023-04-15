@@ -51,7 +51,7 @@ docker push username/reponame:velcoiraptor
     command : ``$ velociraptor config generate -i``
  * After executing the command, Velociraptor will prompt you with configuration questions. You will need to provide appropriate answers based on your requirements.
  * Once completed it will generate a ``server.config.yaml`` file in the current directory.
- * It might look similar to this file(server.config.yaml)
+ * It might look similar to this [file](https://github.com/themalwarenews/Secure_with_zero_cost/blob/main/EDR/server.config.yaml)
  
 
  ### **Step 3 :**
